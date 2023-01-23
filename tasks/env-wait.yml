@@ -1,0 +1,11 @@
+---
+#info: On remote server, verify/wait on domains from local vmh environment
+- name: Wait on environment
+  shell: "vmh env-wait {{ vmh_env }} 2>&1 | sed '/ Waiting /d'"
+  register: shell_vmh_env_wait
+  become: true
+
+- include_role: name=servermonkey.ww_logger
+  vars:
+    ww_msg: '{{ shell_vmh_env_wait.stdout }}'
+    ww_logfile: servermonkey.vmh_env-wait

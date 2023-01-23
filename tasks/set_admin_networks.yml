@@ -1,0 +1,9 @@
+---
+#info: Set vmh admin networks in /etc/vmh.conf, set target to hypervisor host
+#info: , requires variable 'vmh_networks'
+
+- name: Set admin networks in vmh.conf
+  lineinfile:
+    path: /etc/vmh.conf
+    regexp: '^ADMIN_NETWORKS='
+    line: 'ADMIN_NETWORKS={{ vmh_networks }}'

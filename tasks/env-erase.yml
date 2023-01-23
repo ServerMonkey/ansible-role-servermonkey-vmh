@@ -1,0 +1,11 @@
+---
+#info: On remote server, erase domains from local vmh environment
+- name: Erase environment
+  shell: "vmh env-erase {{ vmh_env }} 2>&1 | sed '/ Erasing /d'"
+  register: shell_vmh_env_erase
+  become: true
+
+- include_role: name=servermonkey.ww_logger
+  vars:
+    ww_msg: '{{ shell_vmh_env_erase.stdout }}'
+    ww_logfile: servermonkey.vmh_env-erase

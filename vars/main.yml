@@ -1,0 +1,4 @@
+#vmh_networks  # example: 'admin internet'
+#vmh_env  # name of your vmh environment file without .csv extension or path
+
+servermonkey_debug: false  # devs only

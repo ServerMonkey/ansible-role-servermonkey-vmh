@@ -1,0 +1,27 @@
+---
+#info: Deploy an environment, set target to hypervisor host
+#info: , requires variable 'vmh_env'
+
+- block:
+    - name: Deploy environment
+      shell: "vmh env-deploy {{ vmh_env }} 2>&1 | grep 'Deploy time'"
+      register: shell_vmh_env_deploy
+      become: true
+
+    - include_role: name=servermonkey.ww_logger
+      vars:
+        ww_msg: "{{ shell_vmh_env_deploy.stdout }}"
+        ww_logfile: servermonkey.vmh_env-deploy
+  when: servermonkey_debug is false
+
+- block:
+    - name: Deploy environment (debug)
+      shell: "vmh env-deploy {{ vmh_env }} 2>&1"
+      register: shell_vmh_env_deploy_debug
+      become: true
+
+    - include_role: name=servermonkey.ww_logger
+      vars:
+        ww_msg: "{{ shell_vmh_env_deploy_debug.stdout }}"
+        ww_logfile: servermonkey.vmh_env-deploy
+  when: servermonkey_debug
